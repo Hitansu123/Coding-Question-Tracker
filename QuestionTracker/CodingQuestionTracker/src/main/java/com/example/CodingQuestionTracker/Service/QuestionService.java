@@ -31,11 +31,18 @@ public class QuestionService {
     public Optional<QuestionEntity> getById(int id){
         return questionRepo.findById(id);
     }
-    public boolean Delete(int id){
-        if(questionRepo.existsById(id)){
+
+    public boolean Delete(int id, String username) {
+        Users users = userService.findByUserName(username);
+        if (users != null) {
+            users.getQuestionEntities().removeIf(x -> x.getNumber() == id);
+
+
+            userService.SaveEntry(users);
             questionRepo.deleteById(id);
             return true;
         }
         return false;
+
     }
 }

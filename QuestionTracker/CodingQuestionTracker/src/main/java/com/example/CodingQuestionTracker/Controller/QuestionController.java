@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,13 +52,13 @@ public class QuestionController {
         }
         return new ResponseEntity<>(getBYId.get(),HttpStatus.NOT_FOUND);
     }
-    @DeleteMapping("number/{num}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void DeleteById(@PathVariable int num){
-        if(!questionService.Delete(num)){
-            throw  new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
 
+    @DeleteMapping("number/{username}/{num}")
+    public ResponseEntity<QuestionEntity> DeleteQuestionEntryById(@PathVariable int num, @PathVariable String username) {
+        if (questionService.Delete(num, username)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 //    @PutMapping("/{num}")
 //    public ResponseEntity<QuestionEntity> Update(@PathVariable int num,@RequestBody QuestionEntity myentity) {
