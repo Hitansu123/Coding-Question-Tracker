@@ -60,6 +60,13 @@ public class QuestionController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @DeleteMapping("{username}/{userid}")
+    public void DeleteUser(@PathVariable String username, @PathVariable String userid) {
+        questionService.DeleteUser(username, userid);
+
+    }
+
 //    @PutMapping("/{num}")
 //    public ResponseEntity<QuestionEntity> Update(@PathVariable int num,@RequestBody QuestionEntity myentity) {
 //        QuestionEntity entity = questionService.getById(num).orElse(null);

@@ -45,4 +45,16 @@ public class QuestionService {
         return false;
 
     }
+
+    public void DeleteUser(String username, String userid) {
+        Users users = userService.findByUserName(username);
+        if (users != null) {
+            List<QuestionEntity> questionEntities = users.getQuestionEntities();
+            for (QuestionEntity i : questionEntities) {
+                questionEntities.remove(i);
+            }
+            userService.DeleteUser(userid);
+        }
+
+    }
 }
